@@ -1,11 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <title>Welcome Lucky!</title>
+  
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+
+    .status {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .approved {
+      background-color: #0f0;
+      color: #fff;
+    }
+
+    .declined {
+      background-color: #f00;
+      color: #fff;
+    }
+
+    .pending {
+      background-color: #ccc;
+      color: #000;
+    }
+  </style>
 </head>
 <body>
-    
+  <h1>Welcome Lucky!</h1>
+  <p>You have some queries to review:</p>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Student</th>
+        <th>Query</th>
+        <th>Permission</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="query-1">
+        <td>1</td>
+        <td>Genesis</td>
+        <td>Permission to absent from tech class</td>
+        <td>Yes</td>
+        <td class="status approved">APPROVED</td>
+        <td>
+          <a href="#" id="approve-button-1">Approve</a> |
+          <a href="#" id="decline-button-1">Decline</a>
+        </td>
+      </tr>
+      <tr id="query-2">
+        <td>2</td>
+        <td>Nunya</td>
+        <td>Permission to Absa Hackathon</td>
+        <td>Yes</td>
+        <td class="status approved">APPROVED</td>
+        <td>
+          <a href="#" id="approve-button-2">Approve</a> |
+          <a href="#" id="decline-button-2">Decline</a>
+        </td>
+      </tr>
+      <tr id="query-3">
+        <td>3</td>
+        <td>Fleeur</td>
+        <td>Permission to shoot film</td>
+        <td>No</td>
+        <td class="status declined">DECLINED</td>
+        <td>
+          <a href="#" id="approve-button-3">Approve</a> |
+          <a href="#" id="decline-button-3">Decline</a>
+        </td>
+      </tr>
+      <tr id="query-4">
+        <td>4</td>
+        <td>Delight</td>
+        <td>Need some delightful time to cool off</td>
+        <td>No</td>
+        <td class="status declined">DECLINED</td>
+        <td>
+          <a href="#" id="approve-button-4">Approve</a> |
+          <a href="#" id="decline-button-4">Decline</a>
+        </td>
+      </tr>
+      <tr id="query-5">
+        <td>5</td>
+        <td>Sila</td>
+        <td>Permission to participate in Absa Hackathon</td>
+        <td>Pending</td>
+        <td class="status pending">PENDING</td>
+        <td>
+          <a href="#" id="approve-button-5">Approve</a> |
+          <a href="#" id="decline-button-5">Decline</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    const queries = [
+      { id: 1, student: "Genesis", query: "Permission to absent from tech class", status: "APPROVED" },
+      { id: 2, student: "Nunya", query: "Permission to Absa Hackathon", status: "APPROVED" },
+      { id: 3, student: "Fleeur", query: "Permission to shoot film", status: "DECLINED" },
+      { id: 4, student: "Delight", query: "Need some delightful time to cool off", status: "DECLINED" },
+      { id: 5, student: "Sila", query: "Permission to participate in Absa Hackathon", status: "PENDING" },
+    ];
+
+    // Iterate over the queries array
+    queries.forEach((query) => {
+      // Get the approve and decline buttons
+      const approveButton = document.querySelector(`#approve-button-${query.id}`);
+      const declineButton = document.querySelector(`#decline-button-${query.id}`);
+
+      approveButton.addEventListener("click", () => {
+        // Change the status of the query to approved
+        query.status = "APPROVED";
+
+        // Update the UI to reflect the new status
+        document.querySelector(`#query-${query.id} > td.status`).classList.remove("pending", "declined");
+        document.querySelector(`#query-${query.id} > td.status`).classList.add("approved");
+        document.querySelector(`#query-${query.id} > td.status`).textContent = "APPROVED";
+      });
+
+      declineButton.addEventListener("click", () => {
+        // Change the status of the query to declined
+        query.status = "DECLINED";
+
+        // Update the UI to reflect the new status
+        document.querySelector(`#query-${query.id} > td.status`).classList.remove("pending", "approved");
+        document.querySelector(`#query-${query.id} > td.status`).classList.add("declined");
+        document.querySelector(`#query-${query.id} > td.status`).textContent = "DECLINED";
+      });
+    });
+  </script>
 </body>
 </html>
