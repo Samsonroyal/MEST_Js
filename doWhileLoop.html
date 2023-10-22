@@ -1,11 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <title>Welcome Lucky!</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+
+    .status {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .approved {
+      background-color: #0f0;
+      color: #fff;
+    }
+
+    .declined {
+      background-color: #f00;
+      color: #fff;
+    }
+
+    .pending {
+      background-color: #ccc;
+      color: #000;
+    }
+  </style>
 </head>
 <body>
-    
+  <h1>Welcome Lucky!</h1>
+  <p>You have some queries to review:</p>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Student</th>
+        <th>Query</th>
+        <th>Permission</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="query-table">
+      <!-- The table body will be generated here -->
+    </tbody>
+  </table>
+
+  <script>
+    const queries = [
+      { id: 1, student: "Genesis", query: "Permission to absent from tech class", status: "APPROVED" },
+      { id: 2, student: "Nunya", query: "Permission to Absa Hackathon", status: "APPROVED" },
+      { id: 3, student: "Fleeur", query: "Permission to shoot film", status: "DECLINED" },
+      { id: 4, student: "Delight", query: "Need some delightful time to cool off", status: "DECLINED" },
+      { id: 5, student: "Sila", query: "Permission to participate in Absa Hackathon", status: "PENDING" },
+    ];
+
+    const queryTable = document.getElementById("query-table");
+
+    let i = 0;
+    do {
+      const query = queries[i];
+      const row = document.createElement("tr");
+      row.id = `query-${query.id}`;
+
+      row.innerHTML = `
+        <td>${query.id}</td>
+        <td>${query.student}</td>
+        <td>${query.query}</td>
+        <td>${query.status}</td>
+        <td class="status ${query.status.toLowerCase()}">${query.status}</td>
+        <td>
+          <a href="#" id="approve-button-${query.id}" class="approve-button">Approve</a> |
+          <a href="#" id="decline-button-${query.id}" class="decline-button">Decline</a>
+        </td>
+      `;
+
+      queryTable.appendChild(row);
+
+      // Add event listeners to the buttons
+      const approveButton = row.querySelector(`.approve-button`);
+      const declineButton = row.querySelector(`.decline-button`);
+
+      approveButton.addEventListener("click", () => {
+        // Change the status of the query to approved
+        query.status = "APPROVED";
+
+        // Update the UI to reflect the new status
+        const statusCell = row.querySelector(`.status`);
+        statusCell.classList.remove("pending", "declined");
+        statusCell.classList.add("approved");
+        statusCell.textContent = "APPROVED";
+      });
+
+      declineButton.addEventListener("click", () => {
+        // Change the status of the query to declined
+        query.status = "DECLINED";
+
+        // Update the UI to reflect the new status
+        const statusCell = row.querySelector(`.status`);
+        statusCell.classList.remove("pending", "approved");
+        statusCell.classList.add("declined");
+        statusCell.textContent = "DECLINED";
+      });
+
+      i++;
+    } while (i < queries.length);
+  </script>
 </body>
 </html>
